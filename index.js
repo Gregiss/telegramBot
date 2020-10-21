@@ -13,9 +13,14 @@ bot.use(async (ctx, next) => {
 //Extuda do comando /start
 bot.start(async ctx => {
     const from = ctx.message.from
-    await ctx.reply(`
+    if(from.username == 'kaue404'){
+        await ctx.reply(`
         Olá ${from.first_name} ${from.last_name} (${from.username})\nNo que posso lhe ajudar?
     `)
+    } else{
+        await ctx.reply(`Não posso falar com estranhos 😅`)
+    }
+    
 })
 
 //Evento do texto
