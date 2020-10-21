@@ -10,6 +10,15 @@ bot.use(async (ctx, next) => {
     console.log(`${dataEHora} \n Tempo de resposta: ${ms}ms`)
 })
 
+//Extuda do comando /start
+bot.start(async ctx => {
+    const from = ctx.message.from
+    await ctx.reply(`
+        Olá ${from.first_name} ${from.last_name} (${from.username})\nNo que posso lhe ajudar?
+    `)
+})
+
+//Evento do texto
 bot.on('text', ctx => {
     ctx.reply('Alo Ha')
 })
