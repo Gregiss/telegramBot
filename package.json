@@ -1,0 +1,24 @@
+{
+  "name": "telegramBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js && echo Starting Bot Telegram"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hurricane404/telegramBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hurricane404/telegramBot/issues"
+  },
+  "homepage": "https://github.com/Hurricane404/telegramBot#readme",
+  "dependencies": {
+    "telegraf": "^3.38.0"
+  }
+}
