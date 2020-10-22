@@ -20,7 +20,21 @@ bot.start(async ctx => {
     } else{
         await ctx.reply(`Não posso falar com estranhos 😅`)
     }
-    
+})
+
+
+//Evento de Localização
+bot.on('location', async ctx => {
+    const location = ctx.message.location
+    const lat = location.latitude
+    const lon = location.longitude
+    await ctx.replyWithLocation(lat, lon)
+    await ctx.reply(`
+    https://www.google.com/com/maps/@${lat},${lon},17z
+    `)
+    await ctx.reply(`
+    Você está em: \nLatitude ${lat}, Longitude ${lon} 🧙‍♀️
+    `)
 })
 
 //Evento do texto
