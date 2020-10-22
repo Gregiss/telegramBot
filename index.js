@@ -13,13 +13,8 @@ bot.use(async (ctx, next) => {
 //Extuda do comando /start
 bot.start(async ctx => {
     const from = ctx.message.from
-    if(from.username == 'kaue404'){
-        await ctx.reply(`
-        Olá ${from.first_name} ${from.last_name} (${from.username})\nNo que posso lhe ajudar?
-    `)
-    } else{
-        await ctx.reply(`Não posso falar com estranhos 😅`)
-    }
+    const nome = from.first_name + " " + from.last_name
+    ctx.reply(`Seja bem vindo ${nome}`)
 })
 
 
@@ -39,7 +34,41 @@ bot.on('location', async ctx => {
 
 //Evento do texto
 bot.on('text', ctx => {
-    ctx.reply('Alo Ha')
+    ctx.reply(`${ctx.message.text}`)
+})
+
+bot.on('contanct', ctx => {
+    const contact = ctx.message.contact
+    ctx.reply(`Vou guardar o contato de ${contact.first_name} e telefone ${contact.phone_number}`)
+})
+
+//Evento de voz
+bot.on('voice', ctx => {
+    const voice = ctx.message.voice
+    console.log(voice)
+    ctx.reply(`Áudio recebido, ele possui ${voice.duration}`)
+})
+
+//Evento de foto
+bot.on('photo', ctx => {
+    const photo = ctx.message.photo
+    console.log(photo)
+    photo.forEach((ft, i) => {
+        ctx.reply(`Foto ${i} tem resolução de ${ft.width}x${ft.height}`)
+    })
+})
+
+//Evento de Figurinha (Sticker)
+bot.on('sticker', ctx => {
+    const figurinha = ctx.message.sticker
+    ctx.reply(`Você enviou uma figurinha correspondente ${figurinha.emoji} do pacote ${figurinha.set_name}`)
+})
+
+//Evento de Gif animado
+bot.on('animation', ctx => {
+    const animation = ctx.message.animation
+    console.log(animation)
+    ctx.reply(`Esta animação dura ${animation.duration}s e o tamanho do arquivo é de ${animation.file_size} bytes`)
 })
 
 bot.launch()
