@@ -1,6 +1,3 @@
-const gifSearch = require('gifs-search');
-gifSearch.apiKey("91zTOLnMK6Wa0FSaZzHY0oJEefLljD9Q")
-
 const axios = require('axios')
 
 module.exports = (texto, bot, id) => {
