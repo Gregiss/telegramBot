@@ -19,6 +19,13 @@
   },
   "homepage": "https://github.com/Hurricane404/telegramBot#readme",
   "dependencies": {
-    "telegraf": "^3.38.0"
+    "axios": "^0.21.0",
+    "frinkiac-gif-generator": "^0.7.0",
+    "gifs-search": "^2.0.4",
+    "giphy": "0.0.4",
+    "giphy-api": "^2.0.1",
+    "neural-chatbot": "^2.0.18",
+    "telegraf": "^3.38.0",
+    "telegram-bot-api": "^2.0.1"
   }
 }

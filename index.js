@@ -1,6 +1,8 @@
 const env =  require('./.env')
 const Telegraf = require('telegraf')
 const bot = new Telegraf(env.token)
+const gifSearch = require('./giphy')
+const chatBotDB = require('./database')
 
 bot.use(async (ctx, next) => {
     const start = new Date()
@@ -14,7 +16,8 @@ bot.use(async (ctx, next) => {
 bot.start(async ctx => {
     const from = ctx.message.from
     const nome = from.first_name + " " + from.last_name
-    ctx.reply(`Seja bem vindo ${nome}`)
+    await ctx.reply(`Seja bem vindo ${nome}`)
+    await commands['help']('', ctx)
 })
 
 
@@ -32,12 +35,55 @@ bot.on('location', async ctx => {
     `)
 })
 
+const commands = {
+    'img': (texto, ctx) => {
+        gifSearch(texto, ctx, ctx.message.from.id)
+    },
+    'help': async (texto, ctx) => {
+        //Responde os comandos
+        await ctx.reply(`
+            Existe os comandos !help, !img 'Name'
+        `)
+        //Responde com uma imagem de Welcome
+        await gifSearch('Welcome', ctx, ctx.message.from.id)
+    },
+    'notFound': async (texto, ctx) => {
+        const array = texto.split(' ')
+        var found = false
+        for(let i = 0; i < array.length; i++){
+            if(chatBotDB[array[i].toLowerCase()] != undefined){
+                found = true
+                ctx.reply(chatBotDB[array[i]])
+                break;
+            }
+        }
+        if(!found){
+            await ctx.reply(`
+                Desculpa não entendi 😭
+            `)
+        }
+    }
+}
+
 //Evento do texto
 bot.on('text', ctx => {
-    ctx.reply(`${ctx.message.text}`)
+    const message = ctx.message.text
+    const command = [...message]
+    const auxMessage = message.split(" ")
+    if(command[0] == '!'){
+        const command = auxMessage[0].replace("!", "")
+        if(commands[command] != undefined){
+            const functionCommand = commands[command](auxMessage[1], ctx)
+            typeof functionCommand == 'function' ? functionCommand() : ''
+        } else{
+            ctx.reply("Não encontrei esse comando! 😢")
+        }
+    } else{
+        commands['notFound'](message, ctx)
+    }
 })
 
-bot.on('contanct', ctx => {
+bot.on('contact', ctx => {
     const contact = ctx.message.contact
     ctx.reply(`Vou guardar o contato de ${contact.first_name} e telefone ${contact.phone_number}`)
 })
